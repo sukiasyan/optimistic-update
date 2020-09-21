@@ -14,29 +14,24 @@ export default function(store) {
 		}
 		let transactionID = nextTransactionID++;
 		const raichu = {
-			name: 'raichu',
-			sprites: {
-				front_default:
-					'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/26.png'
+			completed: true
+
 			}
-		};
 		console.log('GET_RAICHU_BEGIN')
 		next({
 			type: GET_RAICHU_BEGIN,
-			payload: { pokemon: raichu, error: '' },
+			payload: raichu,
 			optimist: { type: BEGIN, id: transactionID }
 		});
 
-		setTimeout(() => {
-			// toggle fetch for successful or failed request
-			// fetch('https://pokeapi.co/api/v2/pokemon/raichu/')
-				fetch('https://pokeapifailedrequest.co/api/v2/pokemon/raichu/')
+		setTimeout(() => {	
+			fetch('https://jsonplaceholder.typicode.com/todos/1')
 				.then(res => res.json())
 				.then(raichu => {
 					console.log('GET_RAICHU_COMPLETE');
 					next({
 						type: GET_RAICHU_COMPLETE,
-						payload: { pokemon: raichu, error: '' },
+						payload: raichu,
 						optimist: { type: COMMIT, id: transactionID }
 					});
 				})

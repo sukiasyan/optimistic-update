@@ -1,24 +1,20 @@
 import optimist from 'redux-optimist';
 import {
-	GET_PIKACHU,
 	GET_RAICHU_BEGIN, // new action
 	GET_RAICHU_COMPLETE, // new action
 	GET_RAICHU_FAILED
 } from './pokemonActions';
 
-const initialState = { pokemon: [], error: '' };
+const initialState = { pokemon: false, error: '' };
 
 const reducer = (state = initialState, action) => {
 	switch (action.type) {
-		case GET_PIKACHU: {
-			console.log('GET_PIKACHU');
-			return { ...state, pokemon: action.payload.pokemon };
-		}
+
 		case GET_RAICHU_BEGIN: { // optimistically update store immediately
-			console.log('GET_RAICHU_BEGIN:', action.payload);
+			console.log('GET_RAICHU_BEGIN:', action);
 			return {
 				...state,
-				pokemon: action.payload.pokemon,
+				pokemon: action.payload.completed,
 				error: action.payload.error
 			};
 		}
@@ -26,7 +22,7 @@ const reducer = (state = initialState, action) => {
 			console.log('GET_RAICHU_COMPLETE:', action.payload);
 			return {
 				...state,
-				pokemon: action.payload.pokemon,
+				pokemon: action.payload.completed,
 				error: action.payload.error
 			};
 		}
